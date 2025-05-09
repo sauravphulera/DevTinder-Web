@@ -1,20 +1,20 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-import Body from "./components/Body";
-import Login from "./components/login";
-import Profile from "./components/Profile";
+import { Provider } from "react-redux";
+import { appStore } from "./store/appStore";
+import AuthWrapper from "./components/AuthWrapper";
+import { ToastProvider } from "./components/shared/toast/ToastContext";
 
 function App() {
   return (
     <>
-      <BrowserRouter basename="/">
-        <Routes>
-          <Route path="/" element={<Body />}>
-            <Route path="/profile" element={<Profile />} />
-          </Route>
-          <Route path="/login" element={<Login />}></Route>
-        </Routes>
-      </BrowserRouter>
+      <Provider store={appStore}>
+        <BrowserRouter basename="/">
+          <ToastProvider>
+            <AuthWrapper />
+          </ToastProvider>
+        </BrowserRouter>
+      </Provider>
     </>
   );
 }

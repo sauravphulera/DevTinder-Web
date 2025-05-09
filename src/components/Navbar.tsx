@@ -1,11 +1,41 @@
+import { useDispatch, useSelector } from "react-redux";
+import { AppRootState } from "../store/appStore";
+import { Link, useNavigate } from "react-router-dom";
+import axios, { AxiosError } from "axios";
+import { API_URLS, BASE_URL } from "../utils/constants";
+import { removeUser } from "../store/userSlice";
+
 function Navbar() {
+  const user = useSelector((state: AppRootState) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  async function handleLogout() {
+    try {
+      await axios.post(
+        BASE_URL + API_URLS.logout,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(removeUser());
+    } catch (e) {
+      const error = e as AxiosError;
+      if (error.response?.status === 401) {
+        navigate("/login");
+      }
+    }
+  }
+
   return (
     <>
-      <div className="navbar bg-base-300 shadow-sm">
+      <div className="navbar bg-neutral shadow-sm">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">🧑‍💻 Dev Tinder </a>
+          <Link to="/" className="btn btn-ghost text-xl">
+            🧑‍💻 Dev Tinder{" "}
+          </Link>
         </div>
         <div className="flex gap-2 mx-3">
+          <div>welcome {user?.firstName}</div>
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -15,7 +45,7 @@ function Navbar() {
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  src={user?.photoUrl || null}
                 />
               </div>
             </div>
@@ -24,16 +54,41 @@ function Navbar() {
               className="bg-base-300 menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a className="justify-between">
+                <Link
+                  to="/profile"
+                  className="justify-between"
+                  onClick={() => {
+                    (document.activeElement as HTMLElement)?.blur();
+                  }}
+                >
                   Profile
                   <span className="badge">New</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link
+                  to="/connections"
+                  className="justify-between"
+                  onClick={() => {
+                    (document.activeElement as HTMLElement)?.blur();
+                  }}
+                >
+                  Connections
+                </Link>
               </li>
               <li>
-                <a>Logout</a>
+                <Link
+                  to="/requests"
+                  className="justify-between"
+                  onClick={() => {
+                    (document.activeElement as HTMLElement)?.blur();
+                  }}
+                >
+                  Requests
+                </Link>
+              </li>
+              <li>
+                <a onClick={handleLogout}>Logout</a>
               </li>
             </ul>
           </div>
