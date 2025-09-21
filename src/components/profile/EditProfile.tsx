@@ -6,7 +6,6 @@ import { API_URLS, BASE_URL } from "../../utils/constants";
 import { addUser } from "../../store/userSlice";
 import { useDispatch } from "react-redux";
 import { useToast } from "../shared/toast/ToastContext";
-import UserCard from "../shared/UserCard";
 
 const EditProfile = ({ user }: { user: User }) => {
   const [formData, setFormData] = useState<
