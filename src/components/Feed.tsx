@@ -20,7 +20,6 @@ const Feed: FC = () => {
       const res = await axios.get(BASE_URL + API_URLS.feed, {
         withCredentials: true,
       });
-      console.log(res);
       dispatch(addFeed(res?.data?.displayUsers));
     } catch (e) {
       handleError(e as AxiosError);
