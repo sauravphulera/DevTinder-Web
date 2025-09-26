@@ -1,4 +1,8 @@
-export const BASE_URL = "/api";
+const isLocalhost =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
+
+export const BASE_URL = !isLocalhost ? "/api" : "http://localhost:3000";
 
 export const API_URLS = {
   login: "/login",

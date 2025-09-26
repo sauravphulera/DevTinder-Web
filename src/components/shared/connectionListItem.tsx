@@ -20,8 +20,8 @@ const ConnectionListItem: React.FC<Props> = ({
       <div className="flex items-start gap-4 flex-1">
         {/* Photo */}
         <img
-          src={user.photoUrl}
-          alt={`${user.firstName} ${user.lastName}`}
+          src={user?.photoUrl}
+          alt={`${user?.firstName} ${user?.lastName}`}
           className="w-16 h-16 rounded-full object-cover border-2 border-primary mt-1"
         />
 
@@ -30,16 +30,16 @@ const ConnectionListItem: React.FC<Props> = ({
           <div className="flex justify-between items-start flex-wrap">
             <div>
               <h3 className="text-lg font-semibold text-base-content">
-                {user.firstName} {user.lastName}
+                {user?.firstName} {user?.lastName}
               </h3>
-              <p className="text-sm text-gray-500">Age {user.age}</p>
+              <p className="text-sm text-gray-500">Age {user?.age}</p>
             </div>
           </div>
 
           {/* Skills */}
-          {user.skills.length > 0 ? (
+          {user?.skills?.length > 0 ? (
             <div className="mt-2 flex flex-wrap gap-2">
-              {user.skills.map((skill, index) => (
+              {user?.skills?.map((skill, index) => (
                 <span key={index} className="badge badge-outline badge-accent">
                   {skill}
                 </span>
@@ -54,7 +54,7 @@ const ConnectionListItem: React.FC<Props> = ({
           {/* Date */}
           <p className="text-xs text-gray-400 mt-3">
             Joined on{" "}
-            {new Date(user.createdAt).toLocaleDateString("en-US", {
+            {new Date(user?.createdAt).toLocaleDateString("en-US", {
               year: "numeric",
               month: "short",
               day: "numeric",
@@ -67,25 +67,25 @@ const ConnectionListItem: React.FC<Props> = ({
       <div className="flex flex-col items-end self-start ml-4">
         <span
           className={`badge mb-4 ${
-            user.gender.toLowerCase() === "female"
+            user?.gender?.toLowerCase() === "female"
               ? "badge-secondary"
               : "badge-primary"
           }`}
         >
-          {user.gender}
+          {user?.gender}
         </span>
 
         {showActions && (
           <div className="flex gap-2">
             <button
               className="btn btn-sm btn-success"
-              onClick={() => onAccept?.(user.requestId)}
+              onClick={() => onAccept?.(user?.requestId)}
             >
               Accept
             </button>
             <button
               className="btn btn-sm btn-error"
-              onClick={() => onReject?.(user.requestId)}
+              onClick={() => onReject?.(user?.requestId)}
             >
               Reject
             </button>

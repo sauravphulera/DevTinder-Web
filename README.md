@@ -15,8 +15,8 @@
   - sudo apt install nginx
   - sudo systemctl start nginx
   - sudo systemctl enable nginx
-  - copy code from /dist to var/www/html/
-  - scp -r dist/\* /var/www/html
+  - copy code from /dist/\* to var/www/html/
+  - scp -r dist/ /var/www/html
   - enable port :80 from security / add rule
   - go to public ip of instance on browser
 - Backend
@@ -44,3 +44,12 @@ Backend http://13.48.133.200:3000/
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwar>
         }
+
+# Adding a custom domain name
+
+- purchase domain name from godady
+- Signup on cloudflare (or use godaddy)
+- Change the nameservers on godaddy and point it to cloudflare
+- wait for some time till name servers are updated
+- study about DNS, name server, cname.
+- edit "A" record in dns mapping and change ip
